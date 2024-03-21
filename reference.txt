@@ -1,0 +1,37 @@
+
+
+## Video Link ===>> https://www.youtube.com/watch?v=YdBy9-0pER4
+
+## installation
+
+==============
+  Backend    |
+==============
+ 1-  => cd backend
+ 2-  => npm i express cors dotenv mongodb mongoose  
+ 3-  => npm i ts-node typescript nodemon @types/express @types/cors @types/node --save-dev
+ 4-  => npm i bcryptjs jsonwebtoken
+ 5-  => npm i @types/bcryptjs @types/jsonwebtoken --save-dev
+ 6-  => npm i express-validator
+
+==============
+  Frontend   |
+==============
+ 1-  => npm create vite@latest
+ 2-  => cd frontend 
+ 3-  => npm install
+ 4-  => npm i react-hook-form
+
+
+## Stop Video
+  ==>> 1:11
+
+
+
+
+.env data
+
+MONGODB_CONNECTION_STRING=mongodb+srv://admin:admin@mern-booking-app-db.u4wgtog.mongodb.net/?retryWrites=true&w=majority&appName=mern-booking-app-db
+
+JWT_SECRET_KEY=wnZfEHlZ21lHrT0lIKnrk6qqfAhDhdkS
+FRONTEND_url=http://localhost:5173

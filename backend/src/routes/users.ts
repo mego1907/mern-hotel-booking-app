@@ -39,7 +39,7 @@ router.post(
 
       const token = jwt.sign(
         {
-          uderId: user._id,
+          userId: user._id,
         },
         process.env.JWT_SECRET_KEY as string,
         {

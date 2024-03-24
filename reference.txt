@@ -13,6 +13,8 @@
  4-  => npm i bcryptjs jsonwebtoken
  5-  => npm i @types/bcryptjs @types/jsonwebtoken --save-dev
  6-  => npm i express-validator
+ 7-  => npm i cookie-parser
+ 8-  => npm i --save-dev @types/cookie-parser
 
 ==============
   Frontend   |

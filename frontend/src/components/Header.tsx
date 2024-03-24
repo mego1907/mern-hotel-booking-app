@@ -1,20 +1,31 @@
 import { Link } from "react-router-dom";
+import { useAppContext } from "../contexts/AppContext";
+import SignOutButton from "./SignOutButton";
 
 const Header = () => {
+  const { isLoggedIn } = useAppContext();
+
   return (
-    <div className="bg-blue-800 py-6 ">
-      <div className="container mx-auto flex justify-between">
-        <span className="text-3xl text-white font-bold tracking-tight">
+    <div className="py-6 bg-blue-800 ">
+      <div className="container flex justify-between mx-auto">
+        <span className="text-3xl font-bold tracking-tight text-white">
           <Link to="/">MernHolidays.com</Link>
         </span>
 
-        <span className="flex space-x-2">
-          <Link
-            to="/sign-in"
-            className="flex items-center text-blue-600 px-4 font-bold hover:bg-gray-100 bg-white rounded-md "
-          >
-            Sign In
-          </Link>
+        <span className="flex items-center gap-3 space-x-2 font-medium text-white">
+          {isLoggedIn ? (
+            <>
+              <Link to="/my-bookings">My Bookings</Link>
+              <Link to="/my-hotels">My Hotels</Link>
+              <SignOutButton />
+            </>
+          ) : (
+            <Link to="/sign-in">
+              <button className="px-6 py-2 text-xl font-bold text-white bg-blue-600 rounded-md hover:bg-blue-500">
+                Sign In
+              </button>
+            </Link>
+          )}
         </span>
       </div>
     </div>

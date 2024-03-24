@@ -5,10 +5,14 @@ import mongoose from "mongoose";
 
 import userRoutes from "./routes/users";
 import authRoutes from "./routes/auth";
+import cookieParser from "cookie-parser";
 
-mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
+mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string).then(() => {
+  console.log("Connected to database: ");
+});
 
 const app = express();
+app.use(cookieParser());
 app.use(express.json()); // => to convert the body of API request into JSON automatically
 app.use(express.urlencoded({ extended: true })); // => help us to parse the URL to get the query parameters
 app.use(

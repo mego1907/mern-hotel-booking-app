@@ -15,6 +15,9 @@
  6-  => npm i express-validator
  7-  => npm i cookie-parser
  8-  => npm i --save-dev @types/cookie-parser
+ 9-  => npm i cloudinary
+ 10- => npm i multer
+ 11- => npm i --save-dev @types/multer
 
 ==============
   Frontend   |

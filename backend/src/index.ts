@@ -10,12 +10,19 @@ import myHotelsRoutes from "./routes/my-hotels";
 import cookieParser from "cookie-parser";
 import path from "path";
 import { v2 as cloudinary } from "cloudinary";
+import verifyToken from "./middleware/auth";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
+// cloudinary.config({
+//   cloud_name: "mego1907",
+//   api_key: "686969552283617",
+//   api_secret: "hNAWOQIf8Jv6aRTOAJZykm3LPlc",
+// });
 
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string).then(() => {
   console.log("Connected to database");

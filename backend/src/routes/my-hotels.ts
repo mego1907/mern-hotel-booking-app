@@ -49,7 +49,9 @@ router.post(
         return res.url;
       });
 
-      const imageUrls = await Promise.all(uploadPromises);
+      console.log(await uploadPromises);
+
+      const imageUrls = await Promise.all(await uploadPromises);
       newHotel.imageUrls = imageUrls;
       newHotel.lastUpdated = new Date();
       newHotel.userId = req.userId;
@@ -58,10 +60,10 @@ router.post(
       const hotel = new Hotel(newHotel);
       await hotel.save();
       // 4. return a 201 status
-      res.status(201).send(hotel);
+      return res.status(201).send(hotel);
     } catch (err) {
-      console.log("Error Creating hotel: " + err);
-      res.status(500).json({ message: "Something went wrong" });
+      console.log(err);
+      return res.status(500).json({ message: "Something went wrong" });
     }
   }
 );

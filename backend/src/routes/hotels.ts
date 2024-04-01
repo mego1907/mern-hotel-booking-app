@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import Hotel from "../models/hotel";
 import { HotelSearchResponse } from "../shared/types";
+import { param, validationResult } from "express-validator";
 
 const router = express.Router();
 
@@ -9,17 +10,14 @@ router.get("/search", async (req: Request, res: Response) => {
     const query = constructSearchQuery(req.query);
 
     let sortOptions = {};
-
-    switch (req.query.sortOptions) {
+    switch (req.query.sortOption) {
       case "starRating":
         sortOptions = { starRating: -1 };
         break;
-
-      case "pricePerNightASC":
+      case "pricePerNightAsc":
         sortOptions = { pricePerNight: 1 };
         break;
-
-      case "pricePerNightDESC":
+      case "pricePerNightDesc":
         sortOptions = { pricePerNight: -1 };
         break;
     }
@@ -28,8 +26,6 @@ router.get("/search", async (req: Request, res: Response) => {
     const pageNumber = parseInt(
       req.query.page ? req.query.page.toString() : "1"
     );
-
-    // pageNumber = 3
     const skip = (pageNumber - 1) * pageSize;
 
     const hotels = await Hotel.find(query)
@@ -37,7 +33,7 @@ router.get("/search", async (req: Request, res: Response) => {
       .skip(skip)
       .limit(pageSize);
 
-    const total = await Hotel.countDocuments();
+    const total = await Hotel.countDocuments(query);
 
     const response: HotelSearchResponse = {
       data: hotels,
@@ -48,12 +44,35 @@ router.get("/search", async (req: Request, res: Response) => {
       },
     };
 
-    res.status(200).json(response);
-  } catch (err) {
-    console.log("error", err);
-    res.status(500).json({ message: "Something went wrong" });
+    res.json(response);
+  } catch (error: any) {
+    console.log("error", error);
+    res.status(500).json({ message: error.message });
   }
 });
+
+// /api/hotels/:id
+router.get(
+  "/:id",
+  [param("id").notEmpty().withMessage("Hotel ID is required")],
+  async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const id = req.params.id.toString();
+
+    try {
+      const hotel = await Hotel.findById(id);
+      res.json(hotel);
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ message: errors.array() });
+    }
+  }
+);
 
 const constructSearchQuery = (queryParams: any) => {
   let constructedQuery: any = {};
@@ -99,11 +118,6 @@ const constructSearchQuery = (queryParams: any) => {
       : parseInt(queryParams.stars);
 
     constructedQuery.starRating = { $in: starRatings };
-  }
-
-  if (queryParams.stars) {
-    const starRating = parseInt(queryParams.stars.toString());
-    constructedQuery.starRating = { $eq: starRating };
   }
 
   if (queryParams.maxPrice) {

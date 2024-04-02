@@ -18,6 +18,7 @@
  9-  => npm i cloudinary
  10- => npm i multer
  11- => npm i --save-dev @types/multer
+ 12- => npm i stripe
 
 ==============
   Frontend   |

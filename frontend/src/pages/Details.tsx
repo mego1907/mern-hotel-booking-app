@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import * as apiClient from "../api-client";
 import { AiFillStar } from "react-icons/ai";
 import Layout from "../layouts/Layout";
+import GuestInfoForm from "../forms/GuestInfoForm/GuestInfoForm";
 
 const Details = () => {
   const { hotelId } = useParams();
@@ -49,6 +50,16 @@ const Details = () => {
               {facility}
             </div>
           ))}
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr]">
+          <div className="whitespace-pre-line">{hotel.description}</div>
+          <div className="h-fit">
+            <GuestInfoForm
+              hotelId={hotel._id}
+              pricePerNight={hotel.pricePerNight}
+            />
+          </div>
         </div>
       </div>
     </Layout>

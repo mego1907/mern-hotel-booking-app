@@ -35,10 +35,11 @@ const Booking = () => {
       ),
     {
       enabled: !!hotelId && numberOfNights > 0,
+      onError: (err) => {
+        console.log(err);
+      },
     }
   );
-
-  console.log("paymentIntentData :", paymentIntentData);
 
   const { data: hotel } = useQuery(
     "fetchHotelByID",
